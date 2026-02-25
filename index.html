@@ -3,55 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Block with Copy Button</title>
+    <title>Bitcoin Price Checker</title>
     <style>
-        /* Base Page Styling */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 40px;
             background-color: #f0f2f5;
         }
 
-        /* Container for the Code Block */
-        .code-wrapper {
-            position: relative; /* Essential for positioning the button */
-            background-color: #000000; /* Black background */
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            max-width: 600px;
-            margin: 0 auto;
+        h2 {
+            text-align: center;
+            color: #333;
         }
 
-        /* Code Styling */
+        .code-wrapper {
+            position: relative;
+            background-color: #000000;
+            border-radius: 8px;
+            padding: 30px 20px 20px 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
         code {
             display: block;
-            color: #ffffff; /* White text for contrast */
+            color: #ffffff;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 1.1rem;
-            white-space: pre-wrap; /* Keeps formatting and wraps text */
+            font-size: 0.95rem;
+            white-space: pre; /* Preserves the code formatting */
+            overflow-x: auto;
+            line-height: 1.4;
         }
 
-        /* Copy Button Styling */
         .copy-button {
             position: absolute;
-            top: 12px;
-            right: 12px;
-            background-color: #333;
+            top: 10px;
+            right: 10px;
+            background-color: #444;
             color: #fff;
-            border: 1px solid #555;
-            padding: 6px 12px;
+            border: 1px solid #666;
+            padding: 5px 12px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.2s ease;
+            font-size: 0.75rem;
+            transition: all 0.2s;
         }
 
-        .copy-button:hover {
-            background-color: #555;
-        }
-
-        /* Styling for the "Copied!" state */
+        .copy-button:hover { background-color: #666; }
+        
         .copy-button.success {
             background-color: #28a745;
             border-color: #28a745;
@@ -60,32 +60,53 @@
 </head>
 <body>
 
+    <h2>Bitcoin Price Checker</h2>
+
     <div class="code-wrapper">
-        <!-- The Copy Button -->
         <button class="copy-button" onclick="copyCode(this)">Copy</button>
-        
-        <!-- The Code Block -->
-        <code id="code-content">YOUR CODE HERE</code>
+        <code id="btc-code">$nomention
+
+$argsCheck[1;Usage: `.btc {currency}`]
+
+$if[$message[1]==inr]
+$var[$;₹]
+$elseif[$message[1]==usd]
+$var[$;$]
+$elseif[$message[1]==eur]
+$var[$;€]
+$elseif[$message[1]==jpy]
+$var[$;¥]
+$elseif[$message[1]==php]
+$var[$;₱]
+$elseif[$message[1]==rub]
+$var[$;₽]
+$elseif[$message[1]==pkr]
+$var[$;Rs]
+$elseif[$message[1]==sgd]
+$var[$;S$]
+$endif
+
+$httpGet[https://api.coingecko.com/api/v3/coins/markets?vs_currency=$message[1]]
+$author[Bitcoin (BTC) price in $toUppercase[$message[1]]]
+$authorIcon[https://cdn.discordapp.com/attachments/1446064234877157509/1446064286605512714/2048px-Bitcoin.svg.png?ex=69329fd0&is=69314e50&hm=1ce4cbb8a738b872e7cd6ef5e670372f4d552b2c401689ec83f4aef32004f78d&]
+$addField[<:1000530819:1470489716905345024> Price;**$var[$]**$numberSeparator[$round[$httpResult[0;current_price]]]]
+$addField[<:1000530047:1470489714543825059> Highest (24h);**$var[$]**$numberSeparator[$round[$httpResult[0;high_24h]]]]
+$addField[<:1000530048:1470489711964459080> Lowest (24h);**$var[$]**$numberSeparator[$round[$httpResult[0;low_24h]]]]
+$color[ffffff]
+$footer[Source www.coingecko.com]
+$footerIcon[https://cdn.discordapp.com/attachments/1446064234877157509/1446070067681820693/CoinGecko.png?ex=6932a532&is=693153b2&hm=49a1a9de0414b87a164ca46d87c70a0f3e8f585143581d52deeef294234dfdb1&]</code>
     </div>
 
     <script>
         function copyCode(button) {
-            // Select the text inside the code block
-            const textToCopy = document.getElementById('code-content').innerText;
-
-            // Use the modern Clipboard API
+            const textToCopy = document.getElementById('btc-code').innerText;
             navigator.clipboard.writeText(textToCopy).then(() => {
-                // Visual feedback: Change button text and color
                 button.innerText = "Copied!";
                 button.classList.add('success');
-
-                // Reset the button after 2 seconds
                 setTimeout(() => {
                     button.innerText = "Copy";
                     button.classList.remove('success');
                 }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
             });
         }
     </script>
