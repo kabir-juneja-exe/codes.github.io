@@ -3,31 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Block Example</title>
+    <title>Code Block with Copy</title>
     <style>
-        /* General page styling */
-        body {
-            font-family: sans-serif;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
+        body { font-family: sans-serif; padding: 20px; background-color: #f4f4f4; }
 
-        /* Black background code block styling */
+        /* Container needs position: relative for the button to sit inside */
         .code-container {
-            background-color: #000000; /* Sets black background */
-            color: #ffffff;           /* Sets white text for readability */
+            background-color: #000000;
+            color: #ffffff;
             padding: 20px;
             border-radius: 8px;
-            overflow-x: auto;         /* Allows scrolling for long lines */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative; 
+            overflow-x: auto;
         }
 
-        /* Monospace font for the code */
-        code {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1rem;
-            line-height: 1.5;
+        code { font-family: 'Courier New', Courier, monospace; line-height: 1.5; }
+
+        /* Style for the Copy Button */
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #444;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
         }
+
+        .copy-btn:hover { background: #666; }
     </style>
 </head>
 <body>
@@ -35,15 +41,28 @@
     <h2>My Code Block</h2>
     
     <div class="code-container">
-        <pre><code>
-// This is your code text inside a black block
+        <button class="copy-btn" onclick="copyCode()">Copy</button>
+        <pre><code id="myCode">// This is your code text
 function greetUser() {
     console.log("Hello, World!");
 }
 
-greetUser();
-        </code></pre>
+greetUser();</code></pre>
     </div>
+
+    <script>
+        function copyCode() {
+            // Get the text from the code element
+            const codeText = document.getElementById('myCode').innerText;
+            
+            // Use the Clipboard API to copy
+            navigator.clipboard.writeText(codeText).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.innerText = "Copied!";
+                setTimeout(() => btn.innerText = "Copy", 2000); // Reset after 2s
+            });
+        }
+    </script>
 
 </body>
 </html>
