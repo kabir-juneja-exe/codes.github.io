@@ -293,9 +293,16 @@ $sendEmbedMessage[1475114837787807948;<@$authorID>, Successful Given you the rol
 $setUserVar[HEX;$sum[$getUserVar[HEX;$authorID];1];$authorID]
 `,
 
-            extra: `$nomention 
-$title[HEX System Info]
-$description[Ensure your bot has 'Manage Roles' permissions and is placed above the roles it creates!]`
+            extra: `$nomention
+$onlyAdmin[Error]
+$if[$getUserVar[HEX;$mentioned[<]]==0]
+$ephemeral
+He/She don't have any hex role!
+
+$elseif[$getUserVar[HEX;$mentioned[<]]==1]
+$ephemeral
+$setUserVar[HEX;$sub[$getUserVar[HEx;$mentioned[<]];1];$mentioned[<]]
+Successful removed HEX!`
         };
 
         function switchTab(type, btn) {
