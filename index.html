@@ -3,29 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bitcoin Price Checker Code</title>
+    <title>Kabir.exe | Code Hub</title>
     <style>
         :root {
-            --bg-color: #0a0a0a;
-            --code-bg: #000000;
-            --text-color: #ffffff;
-            --glow-color: rgba(255, 255, 255, 0.2);
+            --glow-color: rgba(255, 255, 255, 0.3);
             --border-color: #ffffff;
+            --bg-color: #000000;
         }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: white;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 40px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* Top Left Name */
-        .brand {
+        .header-name {
             position: absolute;
             top: 20px;
             left: 20px;
@@ -35,55 +32,80 @@
         }
 
         .container {
-            width: 100%;
+            margin-top: 80px;
+            width: 90%;
             max-width: 800px;
-            margin-top: 60px;
         }
 
         h1 {
+            text-align: center;
             font-size: 1.8rem;
             margin-bottom: 20px;
-            text-align: left;
+            letter-spacing: 1px;
         }
 
-        /* Code Block Styling */
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: -1px; /* Overlap border slightly */
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: #111;
+            color: #888;
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px 5px 0 0;
+            transition: 0.3s;
+            font-family: monospace;
+        }
+
+        .tab-btn.active {
+            background: #222;
+            color: white;
+            border-bottom: 1px solid transparent;
+            box-shadow: 0 -5px 15px var(--glow-color);
+        }
+
         .code-wrapper {
             position: relative;
-            background-color: var(--code-bg);
+            background: #000;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 0 5px 5px 5px;
             box-shadow: 0 0 15px var(--glow-color);
-            overflow: hidden;
+            padding: 20px;
         }
 
         pre {
             margin: 0;
-            padding: 20px;
-            overflow-x: auto;
-            color: #d1d1d1;
-            font-family: 'Consolas', 'Monaco', monospace;
-            line-height: 1.5;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Courier New', Courier, monospace;
             font-size: 0.9rem;
+            color: #e0e0e0;
+            max-height: 500px;
+            overflow-y: auto;
         }
 
-        /* Copy Button */
         .copy-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--border-color);
-            color: white;
+            top: 15px;
+            right: 15px;
+            background: white;
+            color: black;
+            border: none;
             padding: 5px 12px;
             border-radius: 4px;
             cursor: pointer;
+            font-weight: bold;
             font-size: 0.8rem;
-            transition: all 0.3s ease;
+            transition: 0.2s;
         }
 
         .copy-btn:hover {
-            background: white;
-            color: black;
+            background: #ccc;
         }
 
         .copy-btn:active {
@@ -93,61 +115,68 @@
 </head>
 <body>
 
-    <div class="brand">Kabir.exe.</div>
+    <div class="header-name">Kabir.exe</div>
 
     <div class="container">
-        <h1>Bitcoin Price Checker</h1>
-        
+        <h1 id="heading">Bitcoin Price Checker</h1>
+
+        <div class="button-group">
+            <button class="tab-btn active" onclick="updateCode('btc', this)">.btc</button>
+            <button class="tab-btn" onclick="updateCode('hex', this)">.hex</button>
+            <button class="tab-btn" onclick="updateCode('interaction_btn', this)">$onInteraction[rolebutton]</button>
+            <button class="tab-btn" onclick="updateCode('interaction_modal', this)">$onInteraction[rolemodal]</button>
+        </div>
+
         <div class="code-wrapper">
             <button class="copy-btn" onclick="copyCode()">Copy</button>
-            <pre id="codeBlock">$nomention
-
-$argsCheck[1;Usage: `.btc {currency}`]
-
-$if[$message[1]==inr]
-$var[$;₹]
-$elseif[$message[1]==usd]
-$var[$;$]
-$elseif[$message[1]==eur]
-$var[$;€]
-$elseif[$message[1]==jpy]
-$var[$;¥]
-$elseif[$message[1]==php]
-$var[$;₱]
-$elseif[$message[1]==rub]
-$var[$;₽]
-$elseif[$message[1]==pkr]
-$var[$;Rs]
-$elseif[$message[1]==sgd]
-$var[$;S$]
-$endif
-
-$httpGet[https://api.coingecko.com/api/v3/coins/markets?vs_currency=$message[1]]
-$author[Bitcoin (BTC) price in $toUppercase[$message[1]]]
-$authorIcon[https://cdn.discordapp.com/attachments/1446064234877157509/1446064286605512714/2048px-Bitcoin.svg.png?ex=69329fd0&is=69314e50&hm=1ce4cbb8a738b872e7cd6ef5e670372f4d552b2c401689ec83f4aef32004f78d&]
-$addField[<:1000530819:1470489716905345024> Price;**$var[$]**$numberSeparator[$round[$httpResult[0;current_price]]]]
-$addField[<:1000530047:1470489714543825059> Highest (24h);**$var[$]**$numberSeparator[$round[$httpResult[0;high_24h]]]]
-$addField[<:1000530048:1470489711964459080> Lowest (24h);**$var[$]**$numberSeparator[$round[$httpResult[0;low_24h]]]]
-$color[ffffff]
-$footer[Source www.coingecko.com]
-$footerIcon[https://cdn.discordapp.com/attachments/1446064234877157509/1446070067681820693/CoinGecko.png?ex=6932a532&is=693153b2&hm=49a1a9de0414b87a164ca46d87c70a0f3e8f585143581d52deeef294234dfdb1&]</pre>
+            <pre id="code-display"></pre>
         </div>
     </div>
 
     <script>
+        const codes = {
+            btc: {
+                title: "Bitcoin Price Checker",
+                content: `$nomention$argsCheck[1;Usage: \`.btc {currency}\`]$if[$message[1]==inr]$var[$;₹]$elseif[$message[1]==usd]$var[$;$]$elseif[$message[1]==eur]$var[$;€]$elseif[$message[1]==jpy]$var[$;¥]$elseif[$message[1]==php]$var[$;₱]$elseif[$message[1]==rub]$var[$;₽]$elseif[$message[1]==pkr]$var[$;Rs]$elseif[$message[1]==sgd]$var[$;S$]$endif$httpGet[https://api.coingecko.com/api/v3/coins/markets?vs_currency=$message[1]]$author[Bitcoin (BTC) price in $toUppercase[$message[1]]]$authorIcon[https://cdn.discordapp.com/attachments/1446064234877157509/1446064286605512714/2048px-Bitcoin.svg.png?ex=69329fd0&is=69314e50&hm=1ce4cbb8a738b872e7cd6ef5e670372f4d552b2c401689ec83f4aef32004f78d&]$addField[<:1000530819:1470489716905345024> Price;**$var[$]**$numberSeparator[$round[$httpResult[0;current_price]]]]$addField[<:1000530047:1470489714543825059> Highest (24h);**$var[$]**$numberSeparator[$round[$httpResult[0;high_24h]]]]$addField[<:1000530048:1470489711964459080> Lowest (24h);**$var[$]**$numberSeparator[$round[$httpResult[0;low_24h]]]]$color[ffffff]$footer[Source www.coingecko.com]$footerIcon[https://cdn.discordapp.com/attachments/1446064234877157509/1446070067681820693/CoinGecko.png?ex=6932a532&is=693153b2&hm=49a1a9de0414b87a164ca46d87c70a0f3e8f585143581d52deeef294234dfdb1&]`
+            },
+            hex: {
+                title: "HEX Role System",
+                content: `$nomention\n$deletecommand\n$var[dot;<:dots:1474755436149346510>]\n$var[star;<a:rollingstar:1474756106696917174>]\n$addContainer[rolemenu;#000000]\n$addTextDisplay[## Auto Role System;rolemenu]\n$addSeparator[true;Small;rolemenu]\n$addTextDisplay[### $var[star] How to use\n$var[dot] Get the HEX colour of your Role.\n$var[dot] Click the button below.\n$var[dot] Enter the HEX code.\n$var[dot] You will get the role!;rolemenu]\n$addSeparator[true;Small;rolemenu]\n$addActionRow[rolebuttonmenu;rolemenu]\n$addButtonCV2[rolebutton;Click Me;success;false;$var[star];rolebuttonmenu]\n$addMediaGallery[roleimg;rolemenu]\n$addMediaGalleryItem[https://cdn.discordapp.com/attachments/1424703458321367201/1475101167871721542/943c9fa24045aaee2eda79cf43dab92a.gif?ex=699c4284&is=699af104&hm=8ce5517a1ba017eebd137653f4db108bff7d48667dd9090b3e7201db2839c472&;;;roleimg]\n$addTextDisplay[-# Enjoy!;rolemenu]`
+            },
+            interaction_btn: {
+                title: "Role Interaction Button",
+                content: `$nomention\n$ephemeral\n\n$if[$getUserVar[HEX;$authorID]==1]\n\n$addContainer[error;#FF0000]\n$addTextDisplay[Sorry <@$authorID> you already have a role to remove it go to <#1457329781078102202>;error]\n\n$elseif[$getUserVar[HEX;$authorID]==0]\n\n$newModal[rolemodal;Hex Code]\n$addTextInput[HexCode;short;Hex;6;6;true;;#000000]\n\n$endif`
+            },
+            interaction_modal: {
+                title: "Role Modal Logic",
+                content: `$nomention\n$suppressErrors\n$if[$findRole[#$toUppercase[$input[HexCode]]]==]\n$createRole[#$toUppercase[$input[HexCode]];#$input[HexCode];no;no]\n$endif\n\n$var[role;$findRole[#$toUppercase[$input[HexCode]]]]\n\n$ephemeral\n$addContainer[success;#000000]\n$addTextDisplay[<@$authorID>, Successful Given you the role <@&$var[role]>;success]\n$roleGrant[$authorID;+$var[role]]\n$sendEmbedMessage[1475114837787807948;<@$authorID>, Successful Given you the role <@&$var[role]>;<@$authorID> - <@&$var[role]>]\n$setUserVar[HEX;$sum[$getUserVar[HEX;$authorID];1];$authorID]`
+            }
+        };
+
+        const codeDisplay = document.getElementById('code-display');
+        const heading = document.getElementById('heading');
+
+        function updateCode(key, btn) {
+            // Update Text
+            codeDisplay.textContent = codes[key].content;
+            heading.textContent = codes[key].title;
+
+            // Update Active Button
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
         function copyCode() {
-            const code = document.getElementById('codeBlock').innerText;
-            navigator.clipboard.writeText(code).then(() => {
+            const text = codeDisplay.textContent;
+            navigator.clipboard.writeText(text).then(() => {
                 const btn = document.querySelector('.copy-btn');
-                btn.innerText = 'Copied!';
-                setTimeout(() => {
-                    btn.innerText = 'Copy';
-                }, 2000);
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 2000);
             });
         }
-    </script>
 
+        // Initialize default
+        updateCode('btc', document.querySelector('.tab-btn'));
+    </script>
 </body>
 </html>
-    
-
