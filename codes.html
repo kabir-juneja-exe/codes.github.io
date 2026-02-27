@@ -5,73 +5,212 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Shadow</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #2c2c2c; color: white; font-family: 'Inter', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
-        
-        /* Top Left Profile */
-        .profile-header { position: absolute; top: 20px; left: 20px; display: flex; align-items: center; gap: 12px; z-index: 10; }
-        .avatar-small { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid white; }
-        .username-top { font-weight: bold; font-size: 1.1rem; }
+        /* General Page Styling */
+        body {
+            background-color: #2c2c2c;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-        /* Sidebar & Menu */
-        .menu-btn { position: absolute; top: 25px; right: 25px; cursor: pointer; z-index: 1001; display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+        /* Top Left Profile Section */
+        .profile-header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .avatar-small {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .username-top {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* --- SIDEBAR & HAMBURGER --- */
+        .menu-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: flex-end;
+        }
+
         .line { height: 3px; background-color: white; border-radius: 2px; transition: 0.3s; }
-        .line-1 { width: 35px; } .line-2 { width: 25px; } .line-3 { width: 15px; }
-        .sidebar { position: fixed; top: 0; right: -250px; width: 250px; height: 100%; background-color: #1a1a1a; transition: 0.4s ease; z-index: 1000; padding-top: 80px; display: flex; flex-direction: column; }
+        .line-1 { width: 35px; }
+        .line-2 { width: 25px; }
+        .line-3 { width: 15px; }
+
+        .sidebar {
+            position: fixed;
+            top: 0; right: -250px;
+            width: 250px; height: 100%;
+            background-color: #1a1a1a;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+            transition: 0.4s ease;
+            z-index: 1000;
+            padding-top: 80px;
+            display: flex;
+            flex-direction: column;
+        }
+
         .sidebar.active { right: 0; }
-        .sidebar a { padding: 15px 30px; text-decoration: none; color: #bbb; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 999; }
+        .sidebar a {
+            padding: 15px 30px;
+            text-decoration: none;
+            color: #bbb;
+            font-size: 1.1rem;
+            transition: 0.3s;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .sidebar a:hover { color: white; background: rgba(255,255,255,0.1); padding-left: 40px; }
+
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 999;
+        }
         .overlay.active { display: block; }
 
-        /* Discord Card */
-        .container { margin-top: 100px; width: 95%; max-width: 800px; text-align: center; }
-        h1 { margin-bottom: 5px; font-size: 2.5rem; font-family: 'Orbitron', sans-serif; }
-        
-        .discord-card { background-color: #111214; width: 100%; max-width: 450px; margin: 0 auto; border-radius: 16px; overflow: hidden; text-align: left; border: 1px solid #ffffff; box-shadow: 0 0 25px rgba(255, 255, 255, 0.2); }
-        
-        /* SYNCED BANNER */
-        .banner { height: 120px; background-size: cover; background-position: center; background-image: url('https://cdn.discordapp.com/banners/1301883723247124521/a_b91b0a63867f80ab6995a61b45642af4.gif'); }
-        
-        .profile-section { padding: 16px; position: relative; }
-        .avatar-large-container { position: absolute; top: -45px; left: 20px; }
-        
-        /* SYNCED AVATAR */
-        .avatar-large { width: 90px; height: 90px; border-radius: 50%; border: 6px solid #111214; background-color: #111214; object-fit: cover; }
-        
-        /* SYNCED STATUS DOT */
-        .status-dot { width: 22px; height: 22px; border-radius: 50%; position: absolute; bottom: 5px; right: 5px; border: 4px solid #111214; transition: 0.3s; }
-        .online { background-color: #23a55a; }
-        .idle { background-color: #f0b232; }
-        .dnd { background-color: #f23f43; }
-        .offline { background-color: #80848e; }
+        /* --- MAIN CONTAINER --- */
+        .container {
+            margin-top: 100px;
+            width: 95%;
+            max-width: 800px;
+            text-align: center;
+        }
 
-        .profile-info { margin-top: 50px; background-color: #1a1b1e; padding: 16px; border-radius: 12px; }
-        
-        /* SYNCED NAMES */
-        .name-row h2 { margin: 0; font-size: 1.6rem; color: #ffffff; font-family: 'Orbitron', sans-serif; text-shadow: 0 0 8px rgba(255,255,255,0.2); text-transform: uppercase; }
+        h1 { margin-bottom: 5px; font-size: 2.5rem; }
+        .description { color: #bbb; margin-bottom: 40px; font-size: 1.1rem; }
+
+        /* --- LIVE DISCORD COMPONENT --- */
+        .discord-card {
+            background-color: #111214;
+            width: 100%;
+            max-width: 500px; /* Slimmer for the new look */
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            text-align: left;
+            border: 1px solid #ffffff;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.25);
+            position: relative;
+        }
+
+        .banner {
+            height: 120px;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://cdn.discordapp.com/banners/1301883723247124521/a_b91b0a63867f80ab6995a61b45642af4.gif');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .profile-section {
+            padding: 16px;
+            position: relative;
+        }
+
+        .avatar-large-container {
+            position: absolute;
+            top: -45px;
+            left: 20px;
+        }
+
+        .avatar-large {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 6px solid #111214;
+            background-color: #111214;
+        }
+
+        .status-dot {
+            width: 22px;
+            height: 22px;
+            background-color: #23a55a;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            border: 4px solid #111214;
+        }
+
+        .profile-info {
+            margin-top: 50px;
+            background-color: #1a1b1e;
+            padding: 16px;
+            border-radius: 12px;
+        }
+
+        .name-row { display: flex; align-items: center; gap: 8px; }
+        .name-row h2 { margin: 0; font-size: 1.5rem; color: #00f7ff; text-shadow: 0 0 10px rgba(0, 247, 255, 0.5); }
+        .pronouns { color: #b5bac1; font-size: 0.9rem; margin-top: 4px; }
         .username-tag { color: #b5bac1; font-size: 1rem; margin-bottom: 12px; }
 
-        .badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
-        .badge { width: 24px; height: 24px; }
+        /* Updated Badges Section */
+        .badges { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+        .badge { width: 24px; height: 24px; object-fit: contain; }
 
-        /* Live Activity Section */
-        #live-activity { font-size: 0.85rem; color: #23a55a; font-weight: bold; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px; display: none; }
+        .link-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #00a8fc;
+            text-decoration: none;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            padding: 8px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
 
-        .footer-socials { margin-top: 40px; display: flex; gap: 35px; justify-content: center; }
+        /* --- FOOTER SOCIALS --- */
+        .footer-socials {
+            margin-top: 40px;
+            display: flex;
+            gap: 35px;
+            justify-content: center;
+        }
+
         .social-icon { color: #bbb; font-size: 2.2rem; transition: 0.3s; }
+        .social-icon:hover { color: white; transform: scale(1.1); }
+        .tilt-icon { transform: rotate(-35deg); }
+
         .copyright { margin-top: 40px; color: #bbb; font-size: 0.9rem; padding-bottom: 30px; }
     </style>
 </head>
 <body>
 
     <div class="profile-header">
-        <img id="header-avatar" src="https://cdn.discordapp.com/avatars/1301883723247124521/4793f5066c0ee12d60df0414b57fe1ee.png" class="avatar-small">
-        <span id="header-username" class="username-top">Shadow</span>
+        <img src="https://cdn.discordapp.com/avatars/1301883723247124521/4793f5066c0ee12d60df0414b57fe1ee.png?size=1024" class="avatar-small">
+        <span class="username-top">Kabir.exe.</span>
     </div>
 
     <div class="menu-btn" onclick="toggleSidebar()">
-        <div class="line"></div><div class="line"></div><div class="line"></div>
+        <div class="line line-1"></div>
+        <div class="line line-2"></div>
+        <div class="line line-3"></div>
     </div>
 
     <div class="sidebar" id="sidebar">
@@ -88,26 +227,31 @@
         <p class="description">Developer and Designer</p>
 
         <div class="discord-card">
-            <div id="user-banner" class="banner"></div>
+            <div class="banner"></div>
             <div class="profile-section">
                 <div class="avatar-large-container">
-                    <img id="user-avatar" src="https://cdn.discordapp.com/avatars/1301883723247124521/4793f5066c0ee12d60df0414b57fe1ee.png" class="avatar-large">
-                    <div id="status-dot" class="status-dot offline"></div>
+                    <img src="https://cdn.discordapp.com/avatars/1301883723247124521/4793f5066c0ee12d60df0414b57fe1ee.png?size=1024" class="avatar-large">
+                    <div class="status-dot"></div>
                 </div>
 
                 <div class="profile-info">
-                    <div class="name-row"><h2 id="global-name">SHADOW</h2></div>
-                    <div id="user-tag" class="username-tag">kabir.exe.</div>
+                    <div class="name-row">
+                        <h2>Shadow</h2>
+                        <span class="pronouns">He/Him</span>
+                    </div>
+                    <div class="username-tag">kabir.exe.</div>
 
                     <div class="badges">
-                        <img src="https://cdn.discordapp.com/attachments/1424703458321367201/1476871803602341928/2502-nitro-bronze-nodot-background.png" class="badge">
-                        <img src="https://cdn.discordapp.com/attachments/1424703458321367201/1476871645238136964/5946-discord-balance.png" class="badge">
-                        <img src="https://cdn.discordapp.com/attachments/1424703458321367201/1476872208180580402/4390-evolving-badge-nitro-1-months.png" class="badge">
-                        <img src="https://cdn.discordapp.com/attachments/1424703458321367201/1476871644948594729/92929-questbadge.png" class="badge">
-                        <img src="https://cdn.discordapp.com/attachments/1424703458321367201/1476871907268624414/41827-orbs.png" class="badge">
+                        <img src="https://cdn.discordapp.com/attachments/1424703458321367201/1476871803602341928/2502-nitro-bronze-nodot-background.png?ex=69a2b38c&is=69a1620c&hm=ea668a622d11316846a0be626a73bfc14544e188762f48c673286dfcb969839f&" class="badge">
+                        <img src="https://cdn.discordapp.com/attachments/1424703458321367201/1476871645238136964/5946-discord-balance.png?ex=69a2b367&is=69a161e7&hm=e943e4245b98183cd3c233b776af2ad897da84c35fa6b6d694cc9e7ee8259689&" class="badge">
+                        <img src="https://cdn.discordapp.com/attachments/1424703458321367201/1476872208180580402/4390-evolving-badge-nitro-1-months.png?ex=69a2b3ed&is=69a1626d&hm=2c4477e190aba26b2cafeea05cbf5dee628bfce7ea8ec40005e29bfa87279f0d&" class="badge">
+                        <img src="https://cdn.discordapp.com/attachments/1424703458321367201/1476871644948594729/92929-questbadge.png?ex=69a2b367&is=69a161e7&hm=475266361ee083d2c09af46aed1593f1861aee175f5c623871776addcbe4903a&" class="badge">
+                        <img src="https://cdn.discordapp.com/attachments/1424703458321367201/1476871907268624414/41827-orbs.png?ex=69a2b3a5&is=69a16225&hm=73a0870ec6a0bf8a18113257ada546880525fba0f10c77bed0f6a875a9497825&" class="badge">
                     </div>
 
-                    <div id="live-activity">🟢 Listening to Spotify</div>
+                    <a href="https://guns.lol/kabirjuneja" target="_blank" class="link-row">
+                        <img src="https://guns.lol/favicon.ico" width="20" style="border-radius: 4px;"> guns.lol/kabirjuneja
+                    </a>
                 </div>
             </div>
         </div>
@@ -115,8 +259,9 @@
         <div class="footer-socials">
             <a href="https://discord.gg/void" class="social-icon"><i class="fa-brands fa-discord"></i></a>
             <a href="mailto:kabir0juneja@gmail.com" class="social-icon"><i class="fa-solid fa-envelope"></i></a>
-            <a href="https://guns.lol/kabirjuneja" class="social-icon"><i class="fa-solid fa-gun"></i></a>
+            <a href="https://guns.lol/kabirjuneja" class="social-icon"><i class="fa-solid fa-gun tilt-icon"></i></a>
         </div>
+
         <div class="copyright">All Rights Reserved by Kabir Juneja</div>
     </div>
 
@@ -125,44 +270,6 @@
             document.getElementById('sidebar').classList.toggle('active');
             document.getElementById('overlay').classList.toggle('active');
         }
-
-        const discordID = "1301883723247124521";
-
-        async function syncDiscord() {
-            try {
-                const res = await fetch(`https://api.lanyard.rest/v1/users/${discordID}`);
-                const { data } = await res.json();
-
-                // 1. Sync Status Dot
-                document.getElementById('status-dot').className = `status-dot ${data.discord_status}`;
-
-                // 2. Sync Avatar (Main and Header)
-                const avatarURL = `https://cdn.discordapp.com/avatars/${discordID}/${data.discord_user.avatar}.png?size=1024`;
-                document.getElementById('user-avatar').src = avatarURL;
-                document.getElementById('header-avatar').src = avatarURL;
-
-                // 3. Sync Names
-                document.getElementById('global-name').innerText = data.discord_user.global_name || "SHADOW";
-                document.getElementById('user-tag').innerText = data.discord_user.username;
-                document.getElementById('header-username').innerText = data.discord_user.username;
-
-                // 4. Sync Activity (Optional Extra)
-                const activityEl = document.getElementById('live-activity');
-                if (data.listening_to_spotify) {
-                    activityEl.style.display = "block";
-                    activityEl.innerText = `🎵 Listening to ${data.spotify.song}`;
-                } else if (data.activities.length > 0) {
-                    activityEl.style.display = "block";
-                    activityEl.innerText = `🎮 Playing ${data.activities[0].name}`;
-                } else {
-                    activityEl.style.display = "none";
-                }
-
-            } catch (e) { console.error("Sync failed", e); }
-        }
-
-        syncDiscord();
-        setInterval(syncDiscord, 15000); // Sync every 15 seconds
     </script>
 </body>
 </html>
