@@ -110,7 +110,7 @@
         .discord-card {
             background-color: #111214;
             width: 100%;
-            max-width: 600px;
+            max-width: 500px; /* Slimmer for the new look */
             margin: 0 auto;
             border-radius: 16px;
             overflow: hidden;
@@ -169,8 +169,9 @@
         .pronouns { color: #b5bac1; font-size: 0.9rem; margin-top: 4px; }
         .username-tag { color: #b5bac1; font-size: 1rem; margin-bottom: 12px; }
 
-        .badges { display: flex; gap: 6px; margin-bottom: 15px; }
-        .badge { width: 22px; height: 22px; }
+        /* Updated Badges Section */
+        .badges { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+        .badge { width: 24px; height: 24px; object-fit: contain; }
 
         .link-row {
             display: flex;
@@ -180,31 +181,8 @@
             text-decoration: none;
             font-size: 1.1rem;
             margin-top: 10px;
-        }
-
-        .game-section {
-            margin-top: 20px;
-            background-color: #2b2d31;
-            padding: 12px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .game-icons { display: flex; gap: 8px; }
-        .game-icon { width: 30px; height: 30px; border-radius: 4px; }
-
-        .edit-btn {
-            width: 100%;
-            background-color: #4e5058;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 4px;
-            margin-top: 15px;
-            font-weight: bold;
-            cursor: pointer;
+            padding: 8px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
         /* --- FOOTER SOCIALS --- */
@@ -264,25 +242,16 @@
                     <div class="username-tag">kabir.exe.</div>
 
                     <div class="badges">
-                        <img src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/hypesquad_bravery.svg" class="badge">
-                        <img src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/nitro.svg" class="badge">
-                        <img src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/boost1month.svg" class="badge">
+                        <img src="https://cdn.discordapp.com/attachments/1424703458321367201/1476871803602341928/2502-nitro-bronze-nodot-background.png?ex=69a2b38c&is=69a1620c&hm=ea668a622d11316846a0be626a73bfc14544e188762f48c673286dfcb969839f&" class="badge">
+                        <img src="https://cdn.discordapp.com/attachments/1424703458321367201/1476871645238136964/5946-discord-balance.png?ex=69a2b367&is=69a161e7&hm=e943e4245b98183cd3c233b776af2ad897da84c35fa6b6d694cc9e7ee8259689&" class="badge">
+                        <img src="https://cdn.discordapp.com/attachments/1424703458321367201/1476872208180580402/4390-evolving-badge-nitro-1-months.png?ex=69a2b3ed&is=69a1626d&hm=2c4477e190aba26b2cafeea05cbf5dee628bfce7ea8ec40005e29bfa87279f0d&" class="badge">
+                        <img src="https://cdn.discordapp.com/attachments/1424703458321367201/1476871644948594729/92929-questbadge.png?ex=69a2b367&is=69a161e7&hm=475266361ee083d2c09af46aed1593f1861aee175f5c623871776addcbe4903a&" class="badge">
+                        <img src="https://cdn.discordapp.com/attachments/1424703458321367201/1476871907268624414/41827-orbs.png?ex=69a2b3a5&is=69a16225&hm=73a0870ec6a0bf8a18113257ada546880525fba0f10c77bed0f6a875a9497825&" class="badge">
                     </div>
 
                     <a href="https://guns.lol/kabirjuneja" target="_blank" class="link-row">
                         <img src="https://guns.lol/favicon.ico" width="20" style="border-radius: 4px;"> guns.lol/kabirjuneja
                     </a>
-
-                    <div class="game-section">
-                        <span>Game Collection</span>
-                        <div class="game-icons">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png" class="game-icon">
-                            <img src="https://play-lh.googleusercontent.com/vH_fMv7vS2WovS9m52UvS2_w5m1946wX2zS55" class="game-icon">
-                            <img src="https://play-lh.googleusercontent.com/8ddccS-mSvl9S6_K_P0I02F2o_86_0E" class="game-icon">
-                        </div>
-                    </div>
-
-                    <button class="edit-btn"><i class="fa-solid fa-pencil"></i> Edit Profile</button>
                 </div>
             </div>
         </div>
